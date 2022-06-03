@@ -1,0 +1,20 @@
+CC=gcc
+CFLAGS=-c -Wall
+LIBINEX=client log
+EXECUTABLE=$(LIBINEX) server
+OBJECTS:=$(addsuffix .o, $(LIBINEX))
+
+all: $(EXECUTABLE)
+	rm -rf *.o
+
+server: fib.o server.o
+	$(CC) $^ -lpthread -o $@
+
+$(LIBINEX): $(OBJECTS)
+	$(CC) $< -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -rf *.o $(EXECUTABLE)
